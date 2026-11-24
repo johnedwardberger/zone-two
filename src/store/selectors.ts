@@ -6,6 +6,7 @@ import type { Activity, Athlete } from '../types'
 import type { AppState } from './store'
 import { CITIES } from '../data/seed'
 import { todayISO } from '../lib/dates'
+import { cityDistanceKm } from '../lib/geo'
 import { compareActivitiesDesc, latestActivity, passesFilters } from '../lib/matching'
 
 type S = Pick<
@@ -61,8 +62,11 @@ export function selectDeck(s: S): DeckCard[] {
     const activity = latestActivity(s.activities, athlete.id)
     if (activity) cards.push({ athlete, activity })
   }
-  // Freshest activities first, so the deck feels alive.
-  return cards.sort((a, b) => compareActivitiesDesc(a.activity, b.activity))
+  // Nearby athletes first (so matching feels local), then freshest activity.
+  const far = (a: Athlete) => (cityDistanceKm(CITIES, me.cityId, a.cityId) > 60 ? 1 : 0)
+  return cards.sort(
+    (a, b) => far(a.athlete) - far(b.athlete) || compareActivitiesDesc(a.activity, b.activity),
+  )
 }
 
 export function selectIncomingRequests(s: S) {

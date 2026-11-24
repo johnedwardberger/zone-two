@@ -43,18 +43,21 @@ export function SportBadge({
 export function KudosIcon({
   filled = false,
   className = 'size-6',
-  strokeWidth = 1.8,
+  strokeWidth = 1.6,
 }: {
   filled?: boolean
   className?: string
   strokeWidth?: number
 }) {
+  // Leaves along the left branch: [x, y, rotation]; mirrored for the right.
   const leaves: [number, number, number][] = [
-    [6.3, 17.2, -50],
-    [4.6, 13.4, -25],
-    [4.5, 9.4, 0],
-    [5.6, 5.8, 20],
+    [8.4, 19.4, -62],
+    [6.1, 16.4, -38],
+    [4.8, 12.6, -18],
+    [4.7, 8.7, 2],
+    [5.6, 5.2, 22],
   ]
+  const leaf = 'M0 0C1.5-1.1 1.6-3.2 0-4.6C-1.6-3.2-1.5-1.1 0 0Z'
   return (
     <svg
       viewBox="0 0 24 24"
@@ -68,25 +71,18 @@ export function KudosIcon({
     >
       {[1, -1].map((dir) => (
         <g key={dir} transform={dir === -1 ? 'translate(24 0) scale(-1 1)' : undefined}>
-          <path d="M10.5 20.5C6.6 19.4 4.2 15.6 4.8 9.6C5 7.7 5.6 6 6.6 4.5" />
+          <path d="M11.2 21.2C6.2 19.4 3.6 14.6 5.3 5.4" />
           {leaves.map(([x, y, r]) => (
-            <ellipse
+            <path
               key={`${x}-${y}`}
-              cx={x - 1.6}
-              cy={y}
-              rx="1.25"
-              ry="2.2"
-              transform={`rotate(${r} ${x - 1.6} ${y})`}
+              d={leaf}
+              transform={`translate(${x} ${y}) rotate(${r})`}
               fill={filled ? 'currentColor' : 'none'}
+              strokeWidth={strokeWidth * 0.85}
             />
           ))}
         </g>
       ))}
-      <path
-        d="M12 6.2l.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.3z"
-        fill={filled ? 'currentColor' : 'none'}
-        strokeWidth={strokeWidth * 0.8}
-      />
     </svg>
   )
 }
