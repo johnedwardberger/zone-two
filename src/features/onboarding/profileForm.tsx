@@ -286,7 +286,16 @@ export function TrainingFields({ draft, set, errors, units }: StepProps & { unit
         <div className="space-y-4 rounded-2xl bg-cream p-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm font-semibold">Typical easy pace</p>
-            <UnitsToggle />
+            <UnitsToggle
+              onUnitsChange={(next, prev) => {
+                const paceInputs = { ...draft.paceInputs }
+                for (const sp of SPORTS) {
+                  const p = parsePaceInput(sp, paceInputs[sp], prev)
+                  if (Number.isFinite(p)) paceInputs[sp] = formatPaceValue(sp, p, next)
+                }
+                set({ paceInputs })
+              }}
+            />
           </div>
           {SPORTS.filter((s) => draft.sports.includes(s)).map((s) => (
             <Field

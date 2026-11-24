@@ -1,10 +1,19 @@
+import { useId } from 'react'
 import { useAppStore } from '../store/store'
 import type { Units } from '../types'
 
 /** Segmented miles/kilometers control bound to the store. */
-export function UnitsToggle({ className = '' }: { className?: string }) {
+export function UnitsToggle({
+  className = '',
+  onUnitsChange,
+}: {
+  className?: string
+  /** Lets forms convert values already typed in the previous units. */
+  onUnitsChange?: (next: Units, prev: Units) => void
+}) {
   const units = useAppStore((s) => s.units)
   const setUnits = useAppStore((s) => s.setUnits)
+  const name = useId()
   const opts: { value: Units; label: string }[] = [
     { value: 'imperial', label: 'Miles' },
     { value: 'metric', label: 'Kilometers' },
@@ -22,10 +31,14 @@ export function UnitsToggle({ className = '' }: { className?: string }) {
         >
           <input
             type="radio"
-            name="units"
+            name={name}
             className="sr-only"
             checked={units === o.value}
-            onChange={() => setUnits(o.value)}
+            onChange={() => {
+              if (o.value === units) return
+              onUnitsChange?.(o.value, units)
+              setUnits(o.value)
+            }}
           />
           {o.label}
         </label>

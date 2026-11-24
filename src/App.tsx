@@ -12,6 +12,7 @@ import { MatchesPage } from './features/matches/MatchesPage'
 import { ProfilePage } from './features/profile/ProfilePage'
 import { SettingsPage } from './features/settings/SettingsPage'
 import { AthleteProfilePage } from './features/profile/AthleteProfilePage'
+import { EditProfilePage } from './features/profile/EditProfilePage'
 import { Celebration } from './features/matches/Celebration'
 
 /** App pages need a demo profile; otherwise start at the landing page. */
@@ -38,6 +39,7 @@ export function App() {
             <Route path="post" element={<PostPage />} />
             <Route path="matches" element={<MatchesPage />} />
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="profile/edit" element={<EditProfilePage />} />
             <Route path="settings" element={<SettingsPage />} />
             <Route path="athlete/:id" element={<AthleteProfilePage />} />
           </Route>
