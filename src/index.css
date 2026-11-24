@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+
+/*
+ * Zone Two design tokens. Components use these via Tailwind utilities
+ * (bg-cream, text-ink, bg-primary, …) and never hard-code hex values.
+ * Contrast notes (WCAG AA):
+ *  - ink on cream ≈ 14:1, muted (#6B605A) on cream ≈ 5.6:1 → body text OK.
+ *  - line (#8C807A) is for borders/icons only (≈3.5:1, meets 3:1 non-text).
+ *  - white on primary-strong (#B84E47) ≈ 5:1 → filled buttons.
+ *  - primary (#D9675F) is the brand accent: icons, Kudos, gradients, large display text.
+ */
+@theme {
+  --color-primary: #d9675f;
+  --color-primary-strong: #b84e47;
+  --color-primary-pressed: #9c3f39;
+  --color-primary-soft: #f6dcd8;
+  --color-coral: #f08a6c;
+
+  --color-cream: #faf4ea;
+  --color-surface: #fffdf8;
+  --color-ink: #2b2523;
+  --color-muted: #6b605a;
+  --color-line: #8c807a;
+  --color-hairline: #ebe2d6;
+
+  /* Subtle sport tints: -tint for backgrounds, -ink for icons/text on them. */
+  --color-run: #e9e1f5;
+  --color-run-ink: #5b3f8c;
+  --color-ride: #dcebe3;
+  --color-ride-ink: #2f6b4f;
+  --color-swim: #dbe8f4;
+  --color-swim-ink: #2c5d8a;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(43 37 35 / 0.05), 0 8px 24px -8px rgb(43 37 35 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(43 37 35 / 0.06), 0 16px 40px -12px rgb(43 37 35 / 0.22);
+
+  --breakpoint-desk: 64rem; /* 1024px: sidebar layout */
+}
+
+@utility bg-celebrate {
+  background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-coral) 100%);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-primary-strong);
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
