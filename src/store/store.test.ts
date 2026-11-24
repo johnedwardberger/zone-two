@@ -8,7 +8,7 @@ describe('store: the core demo flow', () => {
   beforeEach(() => {
     vi.useFakeTimers()
     s().resetDemo()
-    s().useSampleProfile()
+    s().loadSampleProfile()
   })
   afterEach(() => vi.useRealTimers())
 

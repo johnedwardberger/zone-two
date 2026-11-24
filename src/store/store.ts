@@ -76,7 +76,7 @@ type TransientState = {
 
 type Actions = {
   completeOnboarding: (profile: Athlete, opts?: { sample?: boolean }) => void
-  useSampleProfile: () => void
+  loadSampleProfile: () => void
   updateProfile: (patch: Partial<Athlete>) => void
   resetDemo: () => void
 
@@ -218,7 +218,7 @@ export const useAppStore = create<AppState>()(
           notifications: [...s.notifications, ...requests.map((r) => notify('request', r.fromId))],
         })
       },
-      useSampleProfile: () => get().completeOnboarding(SAMPLE_PROFILE, { sample: true }),
+      loadSampleProfile: () => get().completeOnboarding(SAMPLE_PROFILE, { sample: true }),
       updateProfile: (patch) => {
         const me = get().me
         if (me) set({ me: { ...me, ...patch, id: 'me' } })
