@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  roundDistanceM,
   displayToKm,
   displayToMeters,
   distanceUnit,
@@ -49,5 +50,13 @@ describe('units', () => {
     expect(kmToDisplay(16.09344, 'imperial')).toBeCloseTo(10)
     expect(displayToKm(10, 'imperial')).toBeCloseTo(16.09344)
     expect(displayToKm(10, 'metric')).toBe(10)
+  })
+
+  it('rounds suggested distances to friendly numbers', () => {
+    expect(formatDistance(roundDistanceM(8000, 'run', 'imperial'), 'run', 'imperial')).toBe('5 mi')
+    expect(formatDistance(roundDistanceM(8000, 'run', 'metric'), 'run', 'metric')).toBe('8 km')
+    expect(formatDistance(roundDistanceM(1850, 'swim', 'imperial'), 'swim', 'imperial')).toBe(
+      '2,000 yd',
+    )
   })
 })

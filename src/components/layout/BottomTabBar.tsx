@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router'
 import { NAV_ITEMS } from './navItems'
+import { NavBadge } from './NavBadge'
 
 /** Mobile/tablet navigation (< 1024px). */
 export function BottomTabBar() {
@@ -10,7 +11,7 @@ export function BottomTabBar() {
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <ul className="mx-auto flex max-w-xl items-end justify-around px-2">
-        {NAV_ITEMS.map(({ to, label, icon: Icon, primary }) => (
+        {NAV_ITEMS.map(({ to, label, icon: Icon, primary, badge }) => (
           <li key={to} className="flex-1">
             <NavLink
               to={to}
@@ -37,7 +38,10 @@ export function BottomTabBar() {
                   </>
                 ) : (
                   <>
-                    <Icon className="size-6" strokeWidth={isActive ? 2.5 : 2} aria-hidden />
+                    <span className="relative">
+                      <Icon className="size-6" strokeWidth={isActive ? 2.5 : 2} aria-hidden />
+                      {badge && <NavBadge className="absolute -top-1.5 -right-2.5" />}
+                    </span>
                     <span>{label}</span>
                   </>
                 )

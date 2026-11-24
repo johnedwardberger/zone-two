@@ -136,7 +136,7 @@ export function DiscoverPage() {
             <button
               type="button"
               onClick={() => topRef.current?.fling('right')}
-              className="flex size-20 items-center justify-center rounded-full bg-celebrate text-white shadow-lift transition-transform hover:scale-105 active:scale-95"
+              className="flex size-20 items-center justify-center rounded-full bg-celebrate-deep text-white shadow-lift transition-transform hover:scale-105 active:scale-95"
               aria-label={`Give Kudos to ${top.athlete.firstName}’s ${top.activity.title}`}
               title="Kudos (→)"
             >

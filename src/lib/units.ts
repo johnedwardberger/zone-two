@@ -60,3 +60,10 @@ export function longDistanceUnit(units: Units): 'mi' | 'km' {
 function trimZeros(s: string): string {
   return s.includes('.') ? s.replace(/\.?0+$/, '') : s
 }
+
+/** Round a distance to a friendly whole number in the viewer's units (100s for swims). */
+export function roundDistanceM(meters: number, sport: Sport, units: Units): number {
+  const step = sport === 'swim' ? 100 : 1
+  const v = Math.max(step, Math.round(metersToDisplay(meters, sport, units) / step) * step)
+  return displayToMeters(v, sport, units)
+}

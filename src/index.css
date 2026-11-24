@@ -16,6 +16,8 @@
   --color-primary-soft: #f6dcd8;
   --color-coral: #f08a6c;
   --color-coral-soft: #fde3d6;
+  /* Deep end of the celebration gradient: white text stays ≥ 4.5:1 across it. */
+  --color-coral-deep: #bd5444;
 
   --color-cream: #faf4ea;
   --color-surface: #fffdf8;
@@ -47,6 +49,14 @@
 
 @utility bg-celebrate {
   background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-coral) 100%);
+}
+
+@utility bg-celebrate-deep {
+  background-image: linear-gradient(
+    150deg,
+    var(--color-primary-pressed) 0%,
+    var(--color-coral-deep) 100%
+  );
 }
 
 @utility bg-celebrate-soft {

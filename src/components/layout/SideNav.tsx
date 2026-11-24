@@ -2,6 +2,7 @@ import { NavLink } from 'react-router'
 import { Settings } from 'lucide-react'
 import { Logo } from '../Logo'
 import { NAV_ITEMS } from './navItems'
+import { NavBadge } from './NavBadge'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
   [
@@ -18,7 +19,7 @@ export function SideNav() {
       </NavLink>
       <nav aria-label="Main" className="flex flex-1 flex-col">
         <ul className="flex flex-col gap-1">
-          {NAV_ITEMS.map(({ to, label, icon: Icon, primary }) => (
+          {NAV_ITEMS.map(({ to, label, icon: Icon, primary, badge }) => (
             <li key={to}>
               {primary ? (
                 <NavLink
@@ -38,6 +39,7 @@ export function SideNav() {
                 <NavLink to={to} className={linkClass}>
                   <Icon className="size-5" aria-hidden />
                   {label}
+                  {badge && <NavBadge className="ml-auto" />}
                 </NavLink>
               )}
             </li>

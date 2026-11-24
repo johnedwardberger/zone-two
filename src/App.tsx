@@ -11,6 +11,8 @@ import { PostPage } from './features/post/PostPage'
 import { MatchesPage } from './features/matches/MatchesPage'
 import { ProfilePage } from './features/profile/ProfilePage'
 import { SettingsPage } from './features/settings/SettingsPage'
+import { AthleteProfilePage } from './features/profile/AthleteProfilePage'
+import { Celebration } from './features/matches/Celebration'
 
 /** App pages need a demo profile; otherwise start at the landing page. */
 function RequireProfile() {
@@ -37,10 +39,12 @@ export function App() {
             <Route path="matches" element={<MatchesPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="athlete/:id" element={<AthleteProfilePage />} />
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <Celebration />
       <Toaster />
     </HashRouter>
   )
