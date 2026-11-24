@@ -114,7 +114,7 @@ type Actions = {
   setFilters: (filters: Filters) => void
   widenFilters: () => void
 
-  markNotificationsRead: (kind?: Notification['kind']) => void
+  markNotificationsRead: (kind?: Notification['kind'], athleteId?: string) => void
   toast: (text: string, action?: Toast['action']) => void
   dismissToast: (id: string) => void
   /** Re-schedule demo reactions that were pending when the page was closed. */
@@ -455,10 +455,12 @@ export const useAppStore = create<AppState>()(
         }),
 
       // ── Notifications & toasts ───────────────────────────────────────
-      markNotificationsRead: (kind) =>
+      markNotificationsRead: (kind, athleteId) =>
         set((s) => ({
           notifications: s.notifications.map((n) =>
-            !kind || n.kind === kind ? { ...n, read: true } : n,
+            (!kind || n.kind === kind) && (!athleteId || n.athleteId === athleteId)
+              ? { ...n, read: true }
+              : n,
           ),
         })),
       toast: (text, action) => {

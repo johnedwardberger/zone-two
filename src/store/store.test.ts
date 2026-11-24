@@ -77,6 +77,9 @@ describe('store: the core demo flow', () => {
     const thread = s().messages[id]
     expect(thread).toHaveLength(2)
     expect(thread[1].fromId).toBe(id)
+    s().sendMessage(id, 'Saturday?')
+    vi.advanceTimersByTime(3100)
+    expect(s().messages[id]).toHaveLength(4)
     s().sendProposal(id, {
       sport: 'run',
       routeId: 'monon',

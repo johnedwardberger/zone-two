@@ -15,10 +15,9 @@ const between = (min: number, max: number) => min + Math.random() * (max - min)
 
 function schedule(key: string, delay: number, fn: () => void) {
   const id = window.setTimeout(() => {
-    timers.set(
-      key,
-      (timers.get(key) ?? []).filter((t) => t !== id),
-    )
+    const left = (timers.get(key) ?? []).filter((t) => t !== id)
+    if (left.length) timers.set(key, left)
+    else timers.delete(key)
     fn()
   }, delay)
   timers.set(key, [...(timers.get(key) ?? []), id])
