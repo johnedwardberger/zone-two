@@ -11,6 +11,11 @@ type PhotoProps = {
  * illustrations used for fictional profiles. Illustrations are abstract on
  * purpose: they must never look like photos of real people.
  */
+/** Decorative images (empty alt) are hidden from assistive tech; others are labeled. */
+function svgA11y(alt: string) {
+  return alt ? { role: 'img', 'aria-label': alt } : { 'aria-hidden': true }
+}
+
 export function Photo({ src, alt, className = '' }: PhotoProps) {
   if (src.startsWith('art:avatar:')) {
     const [, , hue, initial] = src.split(':')
@@ -46,8 +51,7 @@ function AvatarArt({
     <svg
       viewBox="0 0 400 500"
       preserveAspectRatio="xMidYMid slice"
-      role="img"
-      aria-label={alt}
+      {...svgA11y(alt)}
       className={className}
     >
       <defs>
@@ -107,8 +111,7 @@ function SceneArt({
     <svg
       viewBox="0 0 400 500"
       preserveAspectRatio="xMidYMid slice"
-      role="img"
-      aria-label={alt}
+      {...svgA11y(alt)}
       className={className}
     >
       <defs>

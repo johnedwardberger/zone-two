@@ -44,6 +44,8 @@ export function PhotoCarousel({
       <div
         ref={ref}
         className={`scrollbar-none flex snap-x snap-mandatory overflow-x-auto ${aspect}`}
+        tabIndex={0}
+        aria-label={`${name}’s photos, scroll sideways for more`}
         onScroll={(e) => {
           const el = e.currentTarget
           setIndex(Math.round(el.scrollLeft / el.clientWidth))
