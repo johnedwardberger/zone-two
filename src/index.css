@@ -132,6 +132,19 @@
   }
 }
 
+/* Leaflet paths use theme tokens (SVG attributes can't read CSS variables). */
+.route-line {
+  stroke: var(--color-primary-strong);
+}
+.route-meet {
+  stroke: var(--color-surface);
+  fill: var(--color-ink);
+}
+.leaflet-container {
+  font-family: var(--font-sans);
+  z-index: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

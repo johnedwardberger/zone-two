@@ -67,10 +67,11 @@ export const ROUTES: Route[] = [
     id: 'canal-towpath',
     name: 'Central Canal Towpath',
     sports: ['run'],
-    distanceOptionsM: [5000, 8000, 10000, 16000],
+    distanceOptionsM: [5000, 8000, 11000],
     surface: 'Crushed stone & packed gravel',
     meetingPoint: 'Towpath trailhead by the canal in Broad Ripple Village',
-    description: 'A quiet canal-side path from Broad Ripple past Butler University to Newfields.',
+    description:
+      'A quiet canal-side path, about 3.5 miles from Broad Ripple past Butler to Newfields.',
     path: [
       [39.8687, -86.1424],
       [39.866, -86.149],
@@ -91,7 +92,7 @@ export const ROUTES: Route[] = [
     distanceOptionsM: [5000, 10000, 16000, 20000],
     surface: 'Paved greenway',
     meetingPoint: 'Skiles Test Nature Park parking lot',
-    description: 'A creekside greenway running northeast with wide sightlines and easy grades.',
+    description: 'A 6.9-mile creekside greenway from the Monon to Skiles Test, with easy grades.',
     path: [
       [39.809, -86.154],
       [39.815, -86.138],
@@ -145,12 +146,13 @@ export const ROUTES: Route[] = [
   },
   {
     id: 'white-river',
-    name: 'White River Trail',
+    name: 'White River Wapahani Trail',
     sports: ['run', 'ride'],
     distanceOptionsM: [5000, 8000, 15000],
     surface: 'Paved riverside trail',
     meetingPoint: 'White River State Park, by the Old Washington Street pedestrian bridge',
-    description: 'Riverside miles starting at White River State Park, with skyline views.',
+    description:
+      'About 6.9 paved riverside miles through White River State Park, with skyline views.',
     path: [
       [39.766, -86.172],
       [39.772, -86.1745],
@@ -167,7 +169,8 @@ export const ROUTES: Route[] = [
     distanceOptionsM: [15000, 25000, 40000],
     surface: 'Concrete outdoor track',
     meetingPoint: 'Major Taylor Velodrome main entrance, Cold Spring Rd',
-    description: 'A historic outdoor velodrome with public track sessions and loaner bikes.',
+    description:
+      'A historic outdoor velodrome. Book a coached session; open riding needs a Track 101 class.',
     path: [[39.8285, -86.2016]],
     meetingLatLng: [39.8285, -86.2016],
   },
@@ -196,7 +199,7 @@ export const ROUTES: Route[] = [
     distanceOptionsM: [1500, 2000, 3000],
     surface: '50 m competition pool',
     meetingPoint: 'IU Natatorium main entrance, W New York St',
-    description: 'The downtown Olympic-trials pool, with public lap-swim hours.',
+    description: 'The downtown Olympic-trials pool. Public lap swim with lane reservations.',
     path: [[39.7716, -86.173]],
     meetingLatLng: [39.7716, -86.173],
   },
@@ -207,7 +210,7 @@ export const ROUTES: Route[] = [
     distanceOptionsM: [1500, 2000, 2500],
     surface: 'Indoor lap pool',
     meetingPoint: 'Monon Community Center main entrance, Carmel',
-    description: 'A bright indoor lap pool right on the Monon in Carmel’s Central Park.',
+    description: 'A 25-yard indoor lap pool right on the Monon in Carmel’s Central Park.',
     path: [[39.9655, -86.124]],
     meetingLatLng: [39.9655, -86.124],
   },
