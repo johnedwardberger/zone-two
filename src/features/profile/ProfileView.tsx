@@ -16,7 +16,17 @@ import { LEVEL_LABEL } from '../onboarding/profileForm'
 import { WeeklyChart } from './WeeklyChart'
 
 /** Swipeable photo carousel (scroll-snap) with buttons and dots. */
-export function PhotoCarousel({ photos, name }: { photos: string[]; name: string }) {
+export function PhotoCarousel({
+  photos,
+  name,
+  aspect = 'aspect-[4/5] sm:aspect-[4/3]',
+  rounded = 'rounded-card',
+}: {
+  photos: string[]
+  name: string
+  aspect?: string
+  rounded?: string
+}) {
   const ref = useRef<HTMLDivElement>(null)
   const [index, setIndex] = useState(0)
   const go = (i: number) => {
@@ -27,13 +37,13 @@ export function PhotoCarousel({ photos, name }: { photos: string[]; name: string
   }
   return (
     <div
-      className="relative overflow-hidden rounded-card bg-hairline"
+      className={`relative overflow-hidden bg-hairline ${rounded}`}
       aria-roledescription="carousel"
       aria-label={`${name}’s photos`}
     >
       <div
         ref={ref}
-        className="scrollbar-none flex aspect-[4/5] snap-x snap-mandatory overflow-x-auto sm:aspect-[4/3]"
+        className={`scrollbar-none flex snap-x snap-mandatory overflow-x-auto ${aspect}`}
         onScroll={(e) => {
           const el = e.currentTarget
           setIndex(Math.round(el.scrollLeft / el.clientWidth))
