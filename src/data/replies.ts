@@ -48,7 +48,7 @@ const REPLIES: Record<string, string[]> = {
     'I’m free most mornings after 6.',
   ],
   goofy: [
-    'Hi!!! Kudos to you for giving me Kudos 😄',
+    'Hi!!! Thanks for the Pulse. Mine’s racing 😄',
     'Important question: post-{sport} snack of choice?',
     'Correct answer. We’re going to get along.',
     'I once ran into a mailbox during a tempo. Ask me about it never.',

@@ -10,14 +10,14 @@ export type Core = Pick<
   | 'activities'
   | 'filters'
   | 'swipes'
-  | 'kudosGiven'
-  | 'kudosReceived'
+  | 'pulsesSent'
+  | 'pulsesReceived'
   | 'requests'
   | 'matches'
   | 'messages'
   | 'hidden'
   | 'blocked'
-  | 'feedKudos'
+  | 'feedPulses'
   | 'notifications'
   | 'units'
 >
@@ -28,14 +28,14 @@ const pickCore = (s: AppState): Core => ({
   activities: s.activities,
   filters: s.filters,
   swipes: s.swipes,
-  kudosGiven: s.kudosGiven,
-  kudosReceived: s.kudosReceived,
+  pulsesSent: s.pulsesSent,
+  pulsesReceived: s.pulsesReceived,
   requests: s.requests,
   matches: s.matches,
   messages: s.messages,
   hidden: s.hidden,
   blocked: s.blocked,
-  feedKudos: s.feedKudos,
+  feedPulses: s.feedPulses,
   notifications: s.notifications,
   units: s.units,
 })

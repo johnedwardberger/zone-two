@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Clock, MapPin, Medal, Timer } from 'lucide-r
 import type { Activity, Athlete, Units } from '../../types'
 import { SPORTS } from '../../types'
 import { Photo } from '../../components/Photo'
-import { KudosIcon, SportBadge, SportIcon, SPORT_LABEL } from '../../components/icons'
+import { PulseIcon, SportBadge, SportIcon, SPORT_LABEL } from '../../components/icons'
 import { ActivityMetrics } from '../../components/ActivityMetrics'
 import { Card } from '../../components/ui'
 import { CITIES, cityName } from '../../data/seed'
@@ -205,12 +205,12 @@ export function TrainingSnapshot({ activities, units }: { activities: Activity[]
 export function ActivityItem({
   activity,
   units,
-  kudos,
+  pulse,
 }: {
   activity: Activity
   units: Units
-  /** Private Kudos control (only on others' profiles, before matching). */
-  kudos?: { given: boolean; onGive: () => void }
+  /** Private Pulse control (only on others' profiles, before matching). */
+  pulse?: { sent: boolean; onSend: () => void }
 }) {
   return (
     <Card as="article" className="overflow-hidden">
@@ -238,16 +238,16 @@ export function ActivityItem({
         </div>
         <div className="mt-4 flex items-center justify-between gap-3">
           <span className="text-xs text-muted">Logged with {activity.loggedWith}</span>
-          {kudos && (
+          {pulse && (
             <button
               type="button"
-              onClick={kudos.onGive}
-              disabled={kudos.given}
-              aria-pressed={kudos.given}
-              className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors ${kudos.given ? 'bg-primary-soft text-primary-pressed' : 'border border-hairline bg-surface text-ink hover:border-primary hover:text-primary-strong'}`}
+              onClick={pulse.onSend}
+              disabled={pulse.sent}
+              aria-pressed={pulse.sent}
+              className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors ${pulse.sent ? 'bg-primary-soft text-primary-pressed' : 'border border-hairline bg-surface text-ink hover:border-primary hover:text-primary-strong'}`}
             >
-              <KudosIcon filled={kudos.given} className="size-5" />
-              {kudos.given ? 'Kudos given' : 'Give Kudos'}
+              <PulseIcon filled={pulse.sent} className="size-5" />
+              {pulse.sent ? 'Pulse sent' : 'Send a Pulse'}
             </button>
           )}
         </div>

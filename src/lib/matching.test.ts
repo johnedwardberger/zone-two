@@ -59,7 +59,7 @@ function act(over: Partial<Activity>): Activity {
     movingTimeS: 3000,
     loggedWith: 'Strava',
     photos: [],
-    baseKudos: 0,
+    basePulses: 0,
     comments: [],
     postedAt: 0,
     ...over,
@@ -108,8 +108,8 @@ describe('passesFilters (two-way)', () => {
   })
 })
 
-describe('kudos & date helpers', () => {
-  it('needs Kudos on both sides for a mutual', () => {
+describe('pulse & date helpers', () => {
+  it('needs a Pulse on both sides for a mutual', () => {
     expect(isMutual(true, true)).toBe(true)
     expect(isMutual(true, false)).toBe(false)
     expect(isMutual(false, true)).toBe(false)

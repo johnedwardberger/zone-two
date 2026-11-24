@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { CalendarHeart, MapPin } from 'lucide-react'
 import { useAppStore } from '../../store/store'
 import { Photo } from '../../components/Photo'
-import { KudosIcon, SportBadge, SPORT_LABEL } from '../../components/icons'
+import { PulseIcon, SportBadge, SPORT_LABEL } from '../../components/icons'
 import { ROUTES } from '../../data/routes'
 import { sharedSports, suggestFirstDate } from '../../lib/matching'
 import { formatDistance, paceUnit, roundDistanceM } from '../../lib/units'
@@ -63,7 +63,7 @@ export function Celebration() {
             className="absolute z-10 flex size-14 animate-pop items-center justify-center rounded-full bg-surface text-primary-strong shadow-lift"
             style={{ animationDelay: '260ms' }}
           >
-            <KudosIcon filled className="size-8" />
+            <PulseIcon filled className="size-8" />
           </span>
         </div>
 

@@ -7,7 +7,7 @@ import { useDerived } from '../../store/hooks'
 import { athleteById, selectFeed, selectMatchedAthletes } from '../../store/selectors'
 import { ButtonLink, Card, FictionalNote, Page, PageHeader } from '../../components/ui'
 import { Photo } from '../../components/Photo'
-import { KudosIcon, SportBadge } from '../../components/icons'
+import { PulseIcon, SportBadge } from '../../components/icons'
 import { ActivityMetrics } from '../../components/ActivityMetrics'
 import { coarseWhen, todayISO } from '../../lib/dates'
 import { PhotoCarousel } from '../profile/ProfileView'
@@ -23,7 +23,7 @@ export function FeedPage() {
       {matchCount === 0 && (
         <Card className="mb-6 flex flex-col items-start gap-3 p-5 sm:flex-row sm:items-center">
           <p className="flex-1 text-muted">
-            Your feed fills up as you match. Kudos here are just a friendly cheer between matches.
+            Your feed fills up as you match. Pulses here are just a friendly cheer between matches.
           </p>
           <ButtonLink to="/discover" size="sm" variant="secondary">
             Find matches
@@ -50,7 +50,7 @@ export function FeedPage() {
                   activity={a}
                   athlete={athlete}
                   units={core.units}
-                  kudosGiven={!!core.feedKudos[a.id]}
+                  pulseSent={!!core.feedPulses[a.id]}
                 />
               </li>
             ) : null
@@ -66,21 +66,21 @@ function FeedPost({
   activity: a,
   athlete,
   units,
-  kudosGiven,
+  pulseSent,
 }: {
   activity: Activity
   athlete: Athlete
   units: Units
-  kudosGiven: boolean
+  pulseSent: boolean
 }) {
-  const toggle = useAppStore((s) => s.toggleFeedKudos)
+  const toggle = useAppStore((s) => s.toggleFeedPulse)
   const comment = useAppStore((s) => s.addComment)
   const me = useAppStore((s) => s.me)
   const athletes = useAppStore((s) => s.athletes)
   const [text, setText] = useState('')
   const [showComposer, setShowComposer] = useState(false)
   const mine = a.athleteId === 'me'
-  const count = a.baseKudos + (kudosGiven ? 1 : 0)
+  const count = a.basePulses + (pulseSent ? 1 : 0)
   const profileHref = mine ? '/profile' : `/athlete/${athlete.id}`
   const nameOf = (id: string) =>
     id === 'me' ? 'You' : (athletes.find((x) => x.id === id)?.firstName ?? '')
@@ -127,19 +127,19 @@ function FeedPost({
         <div className="mt-5 flex items-center gap-2 border-t border-hairline pt-3">
           {mine ? (
             <span className="inline-flex h-10 items-center gap-2 px-2 text-sm font-semibold text-muted">
-              <KudosIcon className="size-5" /> {count} Kudos
+              <PulseIcon className="size-5" /> {count} {count === 1 ? 'Pulse' : 'Pulses'}
             </span>
           ) : (
             <button
               type="button"
               onClick={() => toggle(a.id)}
-              aria-pressed={kudosGiven}
-              aria-label={`Give Kudos to ${athlete.firstName}’s ${a.title}. ${count} Kudos.`}
-              className={`inline-flex h-10 items-center gap-2 rounded-full px-3 text-sm font-semibold transition-colors ${kudosGiven ? 'bg-primary-soft text-primary-pressed' : 'text-ink hover:bg-hairline/70'}`}
+              aria-pressed={pulseSent}
+              aria-label={`Send a Pulse on ${athlete.firstName}’s ${a.title}. ${count} ${count === 1 ? 'Pulse' : 'Pulses'}.`}
+              className={`inline-flex h-10 items-center gap-2 rounded-full px-3 text-sm font-semibold transition-colors ${pulseSent ? 'bg-primary-soft text-primary-pressed' : 'text-ink hover:bg-hairline/70'}`}
             >
-              <KudosIcon
-                filled={kudosGiven}
-                className={`size-5 ${kudosGiven ? 'animate-pop' : ''}`}
+              <PulseIcon
+                filled={pulseSent}
+                className={`size-5 ${pulseSent ? 'animate-pop' : ''}`}
               />
               <span aria-hidden>{count}</span>
             </button>

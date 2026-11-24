@@ -670,7 +670,7 @@ export function generateActivities(athlete: Athlete, today: string, count?: numb
         { length: photoCount },
         (_, k) => `art:scene:${sport}:${(i + k + hashString(athlete.id)) % 6}`,
       ),
-      baseKudos: Math.floor(4 + rnd() * 36),
+      basePulses: Math.floor(4 + rnd() * 36),
       comments: [],
       postedAt: Date.now() - daysAgo * 86_400_000 - i,
     })

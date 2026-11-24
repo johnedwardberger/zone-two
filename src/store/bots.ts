@@ -1,7 +1,7 @@
 /*
  * DEMO ONLY: simulates the fictional seeded athletes reacting to the user.
  * A real backend would replace this with server events calling the same
- * store actions (receiveKudos, requestAccepted, receiveMessage, …).
+ * store actions (receivePulse, requestAccepted, receiveMessage, …).
  */
 import type { AppState } from './store'
 import { cannedReply, dateAcceptedReply } from '../data/replies'
@@ -41,7 +41,7 @@ export const bots = {
   scheduleMutual(athleteId: string) {
     const key = `mutual:${athleteId}`
     if (timers.has(key)) return
-    schedule(key, between(1200, 2200), () => getState?.().receiveKudos(athleteId))
+    schedule(key, between(1200, 2200), () => getState?.().receivePulse(athleteId))
   },
 
   /** Seeded athletes accept match requests after 2–4 seconds. */

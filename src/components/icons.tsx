@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { Bike, Footprints, Waves, type LucideProps } from 'lucide-react'
 import type { Sport } from '../types'
 
@@ -37,27 +38,22 @@ export function SportBadge({
 }
 
 /**
- * Zone Two's Kudos mark: a laurel (a nod to finish lines and podiums),
- * deliberately not a heart or a thumbs-up.
+ * Zone Two's Pulse mark: a single heartbeat spike inside a circle, echoing
+ * the logo's heart-rate line (deliberately not a heart or a thumbs-up).
+ * Filled state is a solid disc with the beat cut out, so it reads on any
+ * background.
  */
-export function KudosIcon({
+export function PulseIcon({
   filled = false,
   className = 'size-6',
-  strokeWidth = 1.6,
+  strokeWidth = 1.8,
 }: {
   filled?: boolean
   className?: string
   strokeWidth?: number
 }) {
-  // Leaves along the left branch: [x, y, rotation]; mirrored for the right.
-  const leaves: [number, number, number][] = [
-    [8.4, 19.4, -62],
-    [6.1, 16.4, -38],
-    [4.8, 12.6, -18],
-    [4.7, 8.7, 2],
-    [5.6, 5.2, 22],
-  ]
-  const leaf = 'M0 0C1.5-1.1 1.6-3.2 0-4.6C-1.6-3.2-1.5-1.1 0 0Z'
+  const maskId = useId()
+  const beat = 'M4.6 12.4h3.1l1.7-4.3 2.9 8.6 2.1-6.2 1.2 1.9h3.8'
   return (
     <svg
       viewBox="0 0 24 24"
@@ -69,20 +65,27 @@ export function KudosIcon({
       strokeLinejoin="round"
       aria-hidden
     >
-      {[1, -1].map((dir) => (
-        <g key={dir} transform={dir === -1 ? 'translate(24 0) scale(-1 1)' : undefined}>
-          <path d="M11.2 21.2C6.2 19.4 3.6 14.6 5.3 5.4" />
-          {leaves.map(([x, y, r]) => (
-            <path
-              key={`${x}-${y}`}
-              d={leaf}
-              transform={`translate(${x} ${y}) rotate(${r})`}
-              fill={filled ? 'currentColor' : 'none'}
-              strokeWidth={strokeWidth * 0.85}
-            />
-          ))}
-        </g>
-      ))}
+      {filled ? (
+        <>
+          <mask id={maskId}>
+            <rect width="24" height="24" fill="white" />
+            <path d={beat} stroke="black" strokeWidth={strokeWidth * 1.1} />
+          </mask>
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            fill="currentColor"
+            stroke="none"
+            mask={`url(#${maskId})`}
+          />
+        </>
+      ) : (
+        <>
+          <circle cx="12" cy="12" r="9.2" />
+          <path d={beat} />
+        </>
+      )}
     </svg>
   )
 }

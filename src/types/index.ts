@@ -65,7 +65,7 @@ export type Athlete = {
   bio: string
   idealDate: string
   photos: PhotoSrc[]
-  /** Demo-only: hidden flag that makes this athlete reciprocate Kudos. */
+  /** Demo-only: hidden flag that makes this athlete send a Pulse back. */
   likesYou?: boolean
   /** Demo-only: key into the canned chat replies. */
   persona?: string
@@ -95,8 +95,8 @@ export type Activity = {
   description?: string
   loggedWith: LoggedWith
   photos: PhotoSrc[]
-  /** Feed Kudos (between matches) from people other than the viewer. */
-  baseKudos: number
+  /** Feed Pulses (between matches) from people other than the viewer. */
+  basePulses: number
   comments: Comment[]
   /** Epoch ms when posted; used only for ordering. */
   postedAt: number

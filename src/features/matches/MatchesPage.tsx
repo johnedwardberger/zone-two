@@ -13,7 +13,7 @@ import {
 } from '../../store/selectors'
 import { Button, Card, FictionalNote, Page, PageHeader } from '../../components/ui'
 import { Photo } from '../../components/Photo'
-import { KudosIcon, SportBadge } from '../../components/icons'
+import { PulseIcon, SportBadge } from '../../components/icons'
 import { ageOn, chatTime, todayISO } from '../../lib/dates'
 import { cityName } from '../../data/seed'
 import { ProBanner } from '../pro/ProBanner'
@@ -64,11 +64,11 @@ export function MatchesPage() {
       {empty && (
         <Card className="mb-6 p-8 text-center">
           <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary-soft text-primary-strong">
-            <KudosIcon className="size-7" />
+            <PulseIcon className="size-7" />
           </span>
           <h2 className="mt-4 font-display text-2xl font-bold uppercase">No matches yet</h2>
           <p className="mt-2 text-muted">
-            Give Kudos in Discover. When it’s mutual, you can send a match request.
+            Send a Pulse in Discover. When it’s mutual, you can send a match request.
           </p>
           <Link
             to="/discover"
@@ -136,10 +136,10 @@ export function MatchesPage() {
       {mutuals.length > 0 && (
         <section aria-labelledby="mutual" className="mb-8">
           <h2 id="mutual" className="mb-1 text-lg font-semibold">
-            Mutual Kudos
+            Mutual Pulse
           </h2>
           <p className="mb-3 text-sm text-muted">
-            You gave each other Kudos. Either of you can send a match request.
+            You sent each other a Pulse. Either of you can send a match request.
           </p>
           <ul className="space-y-3">
             {mutuals.map((a) => {
@@ -152,7 +152,7 @@ export function MatchesPage() {
                   <div className="min-w-0 flex-1">
                     <p className="flex items-center gap-2 font-semibold">
                       <Link to={`/athlete/${a.id}`} className="hover:underline">
-                        Mutual Kudos with {a.firstName}
+                        Mutual Pulse with {a.firstName}
                       </Link>
                       {unreadMutual.has(a.id) && (
                         <span className="rounded-full bg-primary-soft px-2 py-0.5 text-xs font-bold text-primary-pressed">

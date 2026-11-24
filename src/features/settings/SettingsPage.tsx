@@ -192,7 +192,7 @@ export function SettingsPage() {
             <span className="flex-1">
               <span className="block font-semibold">Zone Two Pro</span>
               <span className="text-sm text-muted">
-                See who gave you Kudos, boosts, travel mode
+                See who sent you a Pulse, boosts, travel mode
               </span>
             </span>
             <ChevronRight className="size-5 text-muted" aria-hidden />

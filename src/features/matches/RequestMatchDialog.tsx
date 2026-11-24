@@ -27,7 +27,7 @@ export function RequestMatchDialog({
         }}
       >
         <p className="mb-4 text-muted">
-          You both gave each other Kudos. Send a request, and if {athlete.firstName} accepts, you
+          You both sent each other a Pulse. Send a request, and if {athlete.firstName} accepts, you
           can chat and plan a workout date.
         </p>
         <Field label="Add a note (optional)" hint={`${note.length}/140`}>

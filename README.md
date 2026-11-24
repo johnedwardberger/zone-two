@@ -5,8 +5,8 @@
 Zone Two is a **front-end-only proof of concept** of a dating app for serious
 endurance athletes: runners, cyclists and swimmers. You post workouts you
 logged elsewhere (Strava, Nike Run Club, Garmin, Apple Fitness) by entering
-the numbers and adding photos. Instead of a generic like, you give **Kudos**
-to other people's activities. **Mutual Kudos** unlocks a **match request**,
+the numbers and adding photos. Instead of a generic like, you send a **Pulse**
+on other people's activities. A **Mutual Pulse** unlocks a **match request**,
 and once you've matched you can chat and plan a workout as a first date, on a
 well-known public route.
 
@@ -21,9 +21,9 @@ Live demo: https://johnedwardberger.github.io/zone-two/
 ## Try the flow
 
 1. **Try the demo** → fill in onboarding, or tap **Skip: use a sample profile**.
-2. **Discover**: swipe right (or press →) to give Kudos, left (←) to pass.
+2. **Discover**: swipe right (or press →) to send a Pulse, left (←) to pass.
    About 40% of the fictional athletes "already liked your activity", so
-   Kudos to them become **Mutual Kudos** after a moment.
+   a Pulse to them becomes a **Mutual Pulse** after a moment.
 3. **Request to match**. They accept within a few seconds and you get the
    match celebration. Two incoming requests are also waiting in **Matches**.
 4. **Chat**. Fictional athletes reply with short canned messages.

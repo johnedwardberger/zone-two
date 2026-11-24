@@ -40,7 +40,7 @@ export type Toast = {
 
 export type Report = { athleteId: string; reason: string; details?: string; at: number }
 
-export type SwipeAction = 'pass' | 'kudos'
+export type SwipeAction = 'pass' | 'pulse'
 
 type PersistedState = {
   seededOn: string
@@ -51,16 +51,16 @@ type PersistedState = {
   filters: Filters
   /** Discover decisions by athlete id. */
   swipes: Record<string, SwipeAction>
-  /** Activity ids I gave (private) Kudos to, by athlete id. */
-  kudosGiven: Record<string, string[]>
-  /** Athletes who gave Kudos to one of my activities. */
-  kudosReceived: Record<string, true>
-  /** My friendly Kudos on Feed posts, by activity id. */
-  feedKudos: Record<string, true>
+  /** Activity ids I gave (private) Pulses to, by athlete id. */
+  pulsesSent: Record<string, string[]>
+  /** Athletes who sent a Pulse on one of my activities. */
+  pulsesReceived: Record<string, true>
+  /** My friendly Pulses on Feed posts, by activity id. */
+  feedPulses: Record<string, true>
   requests: MatchRequest[]
   matches: Match[]
   messages: Record<string, Message[]>
-  /** Unmatched athletes (hidden from Discover / Mutual Kudos). */
+  /** Unmatched athletes (hidden from Discover / Mutual Pulse). */
   hidden: string[]
   blocked: string[]
   reports: Report[]
@@ -82,9 +82,9 @@ type Actions = {
 
   swipe: (athleteId: string, action: SwipeAction) => void
   undoSwipe: () => void
-  giveKudos: (athleteId: string, activityId: string) => void
-  /** Demo/back-end event: an athlete gave Kudos to one of my activities. */
-  receiveKudos: (athleteId: string) => void
+  sendPulse: (athleteId: string, activityId: string) => void
+  /** Demo/back-end event: an athlete sent a Pulse on one of my activities. */
+  receivePulse: (athleteId: string) => void
 
   sendMatchRequest: (athleteId: string, note?: string) => void
   respondToRequest: (requestId: string, accept: boolean) => void
@@ -105,9 +105,9 @@ type Actions = {
   report: (athleteId: string, reason: string, details?: string) => void
 
   postActivity: (
-    activity: Omit<Activity, 'id' | 'athleteId' | 'postedAt' | 'baseKudos' | 'comments'>,
+    activity: Omit<Activity, 'id' | 'athleteId' | 'postedAt' | 'basePulses' | 'comments'>,
   ) => string
-  toggleFeedKudos: (activityId: string) => void
+  toggleFeedPulse: (activityId: string) => void
   addComment: (activityId: string, text: string) => void
 
   setUnits: (units: Units) => void
@@ -133,9 +133,9 @@ function freshState(): PersistedState {
     units: 'imperial',
     filters: broadFilters(['man', 'woman', 'nonbinary']),
     swipes: {},
-    kudosGiven: {},
-    kudosReceived: {},
-    feedKudos: {},
+    pulsesSent: {},
+    pulsesReceived: {},
+    feedPulses: {},
     requests: [],
     matches: [],
     messages: {},
@@ -179,6 +179,9 @@ const safeStorage = {
     }
   },
 }
+
+// Drop demo data saved under the pre-rename key.
+safeStorage.removeItem('zone-two-demo')
 
 export const useAppStore = create<AppState>()(
   persist(
@@ -228,13 +231,13 @@ export const useAppStore = create<AppState>()(
         set({ ...freshState(), typing: {}, celebration: null, toasts: [] })
       },
 
-      // ── Discover & Kudos ─────────────────────────────────────────────
+      // ── Discover & Pulses ─────────────────────────────────────────────
       swipe: (athleteId, action) => {
         const s = get()
         let activityId: string | undefined
-        if (action === 'kudos') {
+        if (action === 'pulse') {
           activityId = latestActivity(s.activities, athleteId)?.id
-          if (activityId) get().giveKudos(athleteId, activityId)
+          if (activityId) get().sendPulse(athleteId, activityId)
         }
         set((st) => ({
           swipes: { ...st.swipes, [athleteId]: action },
@@ -247,17 +250,17 @@ export const useAppStore = create<AppState>()(
         if (!last) return
         const swipes = { ...s.swipes }
         delete swipes[last.athleteId]
-        const kudosGiven = { ...s.kudosGiven }
-        if (last.action === 'kudos' && last.activityId) {
-          const left = (kudosGiven[last.athleteId] ?? []).filter((id) => id !== last.activityId)
-          if (left.length) kudosGiven[last.athleteId] = left
-          else delete kudosGiven[last.athleteId]
+        const pulsesSent = { ...s.pulsesSent }
+        if (last.action === 'pulse' && last.activityId) {
+          const left = (pulsesSent[last.athleteId] ?? []).filter((id) => id !== last.activityId)
+          if (left.length) pulsesSent[last.athleteId] = left
+          else delete pulsesSent[last.athleteId]
           bots.cancel(`mutual:${last.athleteId}`)
         }
-        const stillMutual = !!kudosGiven[last.athleteId] && !!s.kudosReceived[last.athleteId]
+        const stillMutual = !!pulsesSent[last.athleteId] && !!s.pulsesReceived[last.athleteId]
         set({
           swipes,
-          kudosGiven,
+          pulsesSent,
           lastSwipe: null,
           notifications: stillMutual
             ? s.notifications
@@ -266,20 +269,20 @@ export const useAppStore = create<AppState>()(
               ),
         })
       },
-      giveKudos: (athleteId, activityId) => {
+      sendPulse: (athleteId, activityId) => {
         const s = get()
-        const prev = s.kudosGiven[athleteId] ?? []
+        const prev = s.pulsesSent[athleteId] ?? []
         if (prev.includes(activityId)) return
-        set({ kudosGiven: { ...s.kudosGiven, [athleteId]: [...prev, activityId] } })
+        set({ pulsesSent: { ...s.pulsesSent, [athleteId]: [...prev, activityId] } })
         const athlete = s.athletes.find((a) => a.id === athleteId)
-        if (s.kudosReceived[athleteId]) announceMutual(athleteId)
+        if (s.pulsesReceived[athleteId]) announceMutual(athleteId)
         else if (athlete?.likesYou) bots.scheduleMutual(athleteId)
       },
-      receiveKudos: (athleteId) => {
+      receivePulse: (athleteId) => {
         const s = get()
-        if (s.kudosReceived[athleteId]) return
-        set({ kudosReceived: { ...s.kudosReceived, [athleteId]: true } })
-        if (s.kudosGiven[athleteId]?.length) announceMutual(athleteId)
+        if (s.pulsesReceived[athleteId]) return
+        set({ pulsesReceived: { ...s.pulsesReceived, [athleteId]: true } })
+        if (s.pulsesSent[athleteId]?.length) announceMutual(athleteId)
       },
 
       // ── Match requests & matches ─────────────────────────────────────
@@ -409,18 +412,18 @@ export const useAppStore = create<AppState>()(
           id,
           athleteId: 'me',
           postedAt: Date.now(),
-          baseKudos: 0,
+          basePulses: 0,
           comments: [],
         }
         set((s) => ({ activities: [activity, ...s.activities] }))
         return id
       },
-      toggleFeedKudos: (activityId) =>
+      toggleFeedPulse: (activityId) =>
         set((s) => {
-          const feedKudos = { ...s.feedKudos }
-          if (feedKudos[activityId]) delete feedKudos[activityId]
-          else feedKudos[activityId] = true
-          return { feedKudos }
+          const feedPulses = { ...s.feedPulses }
+          if (feedPulses[activityId]) delete feedPulses[activityId]
+          else feedPulses[activityId] = true
+          return { feedPulses }
         }),
       addComment: (activityId, text) => {
         const t = text.trim()
@@ -446,7 +449,7 @@ export const useAppStore = create<AppState>()(
       widenFilters: () =>
         set((s) => {
           const swipes: Record<string, SwipeAction> = {}
-          for (const [id, a] of Object.entries(s.swipes)) if (a === 'kudos') swipes[id] = a
+          for (const [id, a] of Object.entries(s.swipes)) if (a === 'pulse') swipes[id] = a
           return {
             filters: broadFilters(s.me?.meet ?? ['man', 'woman', 'nonbinary']),
             swipes,
@@ -472,9 +475,9 @@ export const useAppStore = create<AppState>()(
 
       resumeDemo: () => {
         const s = get()
-        for (const [athleteId, given] of Object.entries(s.kudosGiven)) {
+        for (const [athleteId, given] of Object.entries(s.pulsesSent)) {
           const a = s.athletes.find((x) => x.id === athleteId)
-          if (given.length && a?.likesYou && !s.kudosReceived[athleteId])
+          if (given.length && a?.likesYou && !s.pulsesReceived[athleteId])
             bots.scheduleMutual(athleteId)
         }
         for (const r of s.requests)
@@ -489,8 +492,9 @@ export const useAppStore = create<AppState>()(
       },
     }),
     {
-      name: 'zone-two-demo',
-      version: 1,
+      // v2: "Kudos" was renamed to "Pulse"; older saved demos start fresh.
+      name: 'zone-two-demo-v2',
+      version: 2,
       storage: createJSONStorage(() => safeStorage),
       partialize: (s): PersistedState => ({
         seededOn: s.seededOn,
@@ -500,9 +504,9 @@ export const useAppStore = create<AppState>()(
         units: s.units,
         filters: s.filters,
         swipes: s.swipes,
-        kudosGiven: s.kudosGiven,
-        kudosReceived: s.kudosReceived,
-        feedKudos: s.feedKudos,
+        pulsesSent: s.pulsesSent,
+        pulsesReceived: s.pulsesReceived,
+        feedPulses: s.feedPulses,
         requests: s.requests,
         matches: s.matches,
         messages: s.messages,
@@ -521,7 +525,7 @@ function announceMutual(athleteId: string) {
   if (s.notifications.some((n) => n.kind === 'mutual' && n.athleteId === athleteId)) return
   const name = s.athletes.find((a) => a.id === athleteId)?.firstName ?? 'someone'
   useAppStore.setState({ notifications: [...s.notifications, notify('mutual', athleteId)] })
-  s.toast(`Mutual Kudos with ${name}!`, { label: 'Request to match', to: `/athlete/${athleteId}` })
+  s.toast(`Mutual Pulse with ${name}!`, { label: 'Request to match', to: `/athlete/${athleteId}` })
 }
 
 function createMatch(athleteId: string) {

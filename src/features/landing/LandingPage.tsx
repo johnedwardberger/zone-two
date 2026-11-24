@@ -1,7 +1,7 @@
 import { ArrowRight, CalendarHeart, Send, Upload } from 'lucide-react'
 import { Logo } from '../../components/Logo'
 import { Photo } from '../../components/Photo'
-import { KudosIcon, SportIcon } from '../../components/icons'
+import { PulseIcon, SportIcon } from '../../components/icons'
 import { ButtonLink } from '../../components/ui'
 import { useAppStore } from '../../store/store'
 import type { Sport } from '../../types'
@@ -13,14 +13,14 @@ const STEPS = [
     body: 'Add the run, ride or swim you logged in Strava, Nike Run Club, Garmin or Apple Fitness. No GPS maps, ever.',
   },
   {
-    icon: <KudosIcon className="size-6" />,
-    title: 'Give Kudos',
-    body: 'Like someone’s session? Give it Kudos. They’re private until they’re mutual.',
+    icon: <PulseIcon className="size-6" />,
+    title: 'Send a Pulse',
+    body: 'Like someone’s session? Send it a Pulse. Pulses stay private until they’re mutual.',
   },
   {
     icon: <Send className="size-6" aria-hidden />,
     title: 'Request a match',
-    body: 'Mutual Kudos unlocks a match request. Add a note if you want to.',
+    body: 'A Mutual Pulse unlocks a match request. Add a note if you want to.',
   },
   {
     icon: <CalendarHeart className="size-6" aria-hidden />,
@@ -65,7 +65,7 @@ export function LandingPage() {
             </h1>
             <p className="mt-5 max-w-lg text-lg text-muted">
               Zone Two is dating for runners, cyclists and swimmers who train for real. Share your
-              sessions, trade Kudos, and make your first date a workout.
+              sessions, send a Pulse, and make your first date a workout.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               {cta}
@@ -96,7 +96,7 @@ export function LandingPage() {
               label="Masters practice"
             />
             <span className="absolute bottom-[16%] left-[3%] flex size-16 animate-pop items-center justify-center rounded-full bg-celebrate text-white shadow-lift">
-              <KudosIcon filled className="size-8" />
+              <PulseIcon filled className="size-8" />
             </span>
           </div>
         </section>

@@ -20,8 +20,8 @@ cyclists, swimmers) who train many hours a week, with its own identity and
 some Strava-like features. Users post workout sessions they've logged
 elsewhere (Strava, Nike Run Club, Garmin, Apple Fitness) by entering the
 metrics and adding their own photos. No GPS routes or maps of users' workouts
-are ever shown. Instead of a generic like, users give **Kudos** to each
-other's activities. Mutual Kudos unlocks the ability to send a **match
+are ever shown. Instead of a generic like, users send a **Pulse** on each
+other's activities. A Mutual Pulse unlocks the ability to send a **match
 request**; once accepted, the two can chat and plan a workout as a first date.
 
 - Core belief: fit people want to be with fit people.
@@ -59,7 +59,7 @@ request**; once accepted, the two can chat and plan a workout as a first date.
 - Typography: "Inter" for UI text; "Barlow Condensed" (bold) for stats and
   headlines. Load from Google Fonts.
 - Icons: Lucide. Each sport has a consistent icon and subtle tint
-  (run, ride, swim). Kudos gets a distinctive custom icon, not a heart or thumb.
+  (run, ride, swim). Pulse gets a distinctive custom icon, not a heart or thumb.
 - Logo: a simple wordmark "Zone Two," optionally with a minimal heart-rate
   line motif. Create it as inline SVG.
 - Navigation: bottom tab bar on mobile; left sidebar on desktop (≥1024px).
@@ -71,7 +71,7 @@ request**; once accepted, the two can chat and plan a workout as a first date.
 ### 4.1 Landing page (first visit)
 
 - Hero: Zone Two wordmark, tagline, "Try the demo" button.
-- "How it works" in four steps: Post your workout → Give Kudos →
+- "How it works" in four steps: Post your workout → Send a Pulse →
   Request a match → Train together on your first date.
 - Who it's for: runners, cyclists, swimmers who take training seriously.
 - Footer note: "This is a demo. All profiles are fictional."
@@ -97,21 +97,21 @@ Multi-step form with a progress indicator, stored locally:
 - Each card: activity photo (or athlete photo), first name, age, city,
   sport icon, activity title, coarse date ("Tuesday morning"), and key
   metrics (see 4.5). Tap to open the full athlete profile.
-- Actions: Pass and Kudos.
-  - Mobile: swipe left = Pass, right = Kudos, with drag physics, card tilt,
-    and "PASS"/"KUDOS" stamps that fade in while dragging.
-  - Desktop: buttons + keyboard arrows (← pass, → kudos).
+- Actions: Pass and Pulse.
+  - Mobile: swipe left = Pass, right = Pulse, with drag physics, card tilt,
+    and "PASS"/"PULSE" stamps that fade in while dragging.
+  - Desktop: buttons + keyboard arrows (← pass, → pulse).
 - Undo last swipe (one level).
 - Empty state when the deck runs out, with a button to widen filters.
 
-### 4.4 Kudos → match request → match
+### 4.4 Pulse → match request → match
 
-- Kudos are private. No one sees who gave them Kudos unless it's mutual
-  (seeing all Kudos is a mock Pro feature; see 4.11).
-- **Mutual Kudos:** when both users have given Kudos to at least one of
-  each other's activities, both see a "Mutual Kudos with [Name]"
+- Pulses are private. No one sees who sent them a Pulse unless it's mutual
+  (seeing all Pulses is a mock Pro feature; see 4.11).
+- **Mutual Pulse:** when both users have sent a Pulse on at least one of
+  each other's activities, both see a "Mutual Pulse with [Name]"
   notification and a **"Request to match"** button on that person's profile
-  and in the Matches tab's "Mutual Kudos" section.
+  and in the Matches tab's "Mutual Pulse" section.
 - **Match request:** either person can send it, optionally with a short note
   (max 140 chars). The other person can Accept or Decline. Declines are
   silent (the sender just never sees an acceptance).
@@ -119,8 +119,8 @@ Multi-step form with a progress indicator, stored locally:
   photos, shared sport(s), and a suggested first-date workout built from both
   profiles. Buttons: "Send a message" and "Keep swiping".
 - Demo behavior:
-  - Each seeded athlete has a hidden `likesYou` flag (~40% true). Giving
-    Kudos to one with `likesYou = true` triggers Mutual Kudos (after a short
+  - Each seeded athlete has a hidden `likesYou` flag (~40% true). Sending
+    a Pulse to one with `likesYou = true` triggers a Mutual Pulse (after a short
     delay, as if they'd already liked your activity).
   - When you send a match request to a seeded athlete, they accept after
     2–4 seconds.
@@ -149,14 +149,14 @@ Form fields:
 
 - Chronological list of activities from your matches and yourself.
 - Each post: athlete, sport, title, metrics row, photos (carousel if >1),
-  Kudos button with count, and comments.
-- Kudos here are a friendly reaction between people who have already
+  Pulse button with count, and comments.
+- Pulses here are a friendly reaction between people who have already
   matched; they don't affect matching.
 
 ### 4.7 Matches & chat
 
 - Matches tab sections: "Match requests" (incoming, with Accept/Decline),
-  "Mutual Kudos" (people you can send a request to), new matches as a
+  "Mutual Pulse" (people you can send a request to), new matches as a
   horizontal avatar row, and conversations with last-message previews.
 - Chat thread: message bubbles, timestamps, typing indicator.
   Demo: seeded athletes reply with short canned messages after 1–3 seconds,
@@ -209,7 +209,7 @@ Form fields:
 
 - An upsell page reachable from Settings and from a subtle banner in
   Discover/Matches.
-- Features shown: See who gave you Kudos (blurred avatar grid preview),
+- Features shown: See who sent you a Pulse (blurred avatar grid preview),
   Unlimited undo, Boost your activity to the top of nearby decks for 30 min,
   Travel mode (swipe in another city before a race).
 - Mock pricing: monthly and annual plan cards.
@@ -270,7 +270,7 @@ Form fields:
 2. Seed data, store, unit/pace utilities, matching logic (with tests).
 3. Landing page + onboarding.
 4. Discover swipe deck.
-5. Kudos → mutual Kudos → match requests → match celebration.
+5. Pulse → Mutual Pulse → match requests → match celebration.
 6. Post activity + Profile.
 7. Feed.
 8. Matches tab + chat + block/report.
@@ -281,8 +281,8 @@ Form fields:
 
 ## 11. Definition of done
 
-- The full flow works in the deployed demo: land → onboard → swipe → mutual
-  Kudos → send/accept match request → match → chat → plan a date on a
+- The full flow works in the deployed demo: land → onboard → swipe → Mutual
+  Pulse → send/accept match request → match → chat → plan a date on a
   suggested route → post an activity → see it on profile and in the feed.
 - No console errors; works in latest Chrome, Safari, Firefox, and mobile
   Safari.
@@ -293,13 +293,13 @@ Form fields:
 - Deploy: GitHub Pages via Actions, base `/zone-two/`, no custom domain.
 - Palette AA fixes: secondary _text_ uses darker `#6B605A`; `#8C807A` is for
   borders/icons only. Filled buttons use `#B84E47` with white text (pressed:
-  darker still). `#D9675F` stays the brand accent for icons, Kudos,
+  darker still). `#D9675F` stays the brand accent for icons, Pulse,
   gradients and large display text.
 - Bottom tab bar below 1024px (incl. tablets); left sidebar at ≥1024px.
 - Post is a regular page (`/post`). Settings opens from a gear on Profile
   and appears in the desktop sidebar.
 - Discover shows one card per athlete (their most recent activity); the
-  athlete leaves the deck after Pass or Kudos.
+  athlete leaves the deck after Pass or Pulse.
 - Discovery filters apply both ways (gender and age).
 - Onboarding city is a pick-list of seeded cities (needed for distance).
 - Passed athletes return only when filters widen or the demo is reset.
@@ -310,3 +310,5 @@ Form fields:
   image compression hand-rolled.
 - QA: Chromium screenshots at 375/768/1440 here; the owner checks Safari,
   Firefox and mobile Safari on real devices.
+- Naming: "Kudos" was renamed to **Pulse** everywhere (UI, code, docs), with
+  a new heartbeat-in-a-circle icon. Verb: "Send a Pulse"; pair: "Mutual Pulse".

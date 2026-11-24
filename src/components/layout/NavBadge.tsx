@@ -1,6 +1,6 @@
 import { useAppStore } from '../../store/store'
 
-/** Unread count for the Matches tab (requests, mutual Kudos, new matches). */
+/** Unread count for the Matches tab (requests, mutual Pulse, new matches). */
 export function NavBadge({ className = '' }: { className?: string }) {
   const count = useAppStore((s) => s.notifications.filter((n) => !n.read).length)
   if (!count) return null

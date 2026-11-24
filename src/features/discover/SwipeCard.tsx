@@ -51,7 +51,7 @@ export const SwipeCard = forwardRef<
   const dx = leaving ? (leaving === 'right' ? 1 : -1) * window.innerWidth * 1.2 : (drag?.x ?? 0)
   const dy = leaving ? (drag?.y ?? 0) + 40 : (drag?.y ?? 0)
   const rotate = dx / 18
-  const kudosOpacity = Math.min(1, Math.max(0, dx / 100))
+  const pulseOpacity = Math.min(1, Math.max(0, dx / 100))
   const passOpacity = Math.min(1, Math.max(0, -dx / 100))
 
   const style: React.CSSProperties = interactive
@@ -115,10 +115,10 @@ export const SwipeCard = forwardRef<
         <>
           <span
             className="absolute top-8 left-6 -rotate-12 rounded-xl border-4 border-white bg-primary-strong/80 px-3 py-1 font-display text-4xl font-bold tracking-widest text-white"
-            style={{ opacity: kudosOpacity }}
+            style={{ opacity: pulseOpacity }}
             aria-hidden
           >
-            KUDOS
+            PULSE
           </span>
           <span
             className="absolute top-8 right-6 rotate-12 rounded-xl border-4 border-white bg-ink/70 px-3 py-1 font-display text-4xl font-bold tracking-widest text-white"

@@ -19,18 +19,18 @@ describe('store: the core demo flow', () => {
     expect(selectDeck(s()).length).toBeGreaterThan(5)
   })
 
-  it('Kudos to a likesYou athlete becomes Mutual Kudos after a delay', () => {
+  it('A Pulse to a likesYou athlete becomes Mutual Pulse after a delay', () => {
     const card = selectDeck(s()).find((c) => c.athlete.likesYou)!
-    s().swipe(card.athlete.id, 'kudos')
+    s().swipe(card.athlete.id, 'pulse')
     expect(selectMutuals(s()).map((a) => a.id)).not.toContain(card.athlete.id)
     vi.advanceTimersByTime(2500)
     expect(selectMutuals(s()).map((a) => a.id)).toContain(card.athlete.id)
     expect(selectDeck(s()).some((c) => c.athlete.id === card.athlete.id)).toBe(false)
   })
 
-  it('Kudos to others never becomes mutual; pass removes from deck', () => {
+  it('A Pulse to others never becomes mutual; pass removes from deck', () => {
     const card = selectDeck(s()).find((c) => !c.athlete.likesYou)!
-    s().swipe(card.athlete.id, 'kudos')
+    s().swipe(card.athlete.id, 'pulse')
     vi.advanceTimersByTime(5000)
     expect(selectMutuals(s())).toHaveLength(0)
     const next = selectDeck(s())[0]
@@ -40,7 +40,7 @@ describe('store: the core demo flow', () => {
 
   it('undo restores the last card and cancels a pending mutual', () => {
     const card = selectDeck(s()).find((c) => c.athlete.likesYou)!
-    s().swipe(card.athlete.id, 'kudos')
+    s().swipe(card.athlete.id, 'pulse')
     s().undoSwipe()
     vi.advanceTimersByTime(5000)
     expect(selectDeck(s()).some((c) => c.athlete.id === card.athlete.id)).toBe(true)
@@ -49,7 +49,7 @@ describe('store: the core demo flow', () => {
 
   it('a match request is accepted in 2–4 s and opens the celebration', () => {
     const card = selectDeck(s()).find((c) => c.athlete.likesYou)!
-    s().swipe(card.athlete.id, 'kudos')
+    s().swipe(card.athlete.id, 'pulse')
     vi.advanceTimersByTime(2500)
     s().sendMatchRequest(card.athlete.id, 'Easy miles Saturday?')
     vi.advanceTimersByTime(1900)

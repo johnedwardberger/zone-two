@@ -8,7 +8,7 @@ import { Photo } from '../../components/Photo'
 const FEATURES = [
   {
     icon: Eye,
-    title: 'See who gave you Kudos',
+    title: 'See who sent you a Pulse',
     body: 'Skip the guessing and see everyone who liked your sessions.',
   },
   {
@@ -66,11 +66,11 @@ export function ProPage() {
       </section>
 
       <Card className="mt-6 p-5 sm:p-6">
-        <h2 className="font-display text-2xl font-bold uppercase">People who gave you Kudos</h2>
+        <h2 className="font-display text-2xl font-bold uppercase">People who sent you a Pulse</h2>
         <p className="mb-4 text-sm text-muted">Pro shows you who they are. Here’s a preview.</p>
         <ul
           className="grid grid-cols-4 gap-3"
-          aria-label="Blurred preview of people who gave you Kudos"
+          aria-label="Blurred preview of people who sent you a Pulse"
         >
           {preview.map((a) => (
             <li

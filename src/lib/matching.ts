@@ -73,9 +73,9 @@ export function passesFilters(
   return true
 }
 
-/** Mutual Kudos: each side gave Kudos to at least one of the other's activities. */
-export function isMutual(iGaveKudos: boolean, theyGaveKudos: boolean): boolean {
-  return iGaveKudos && theyGaveKudos
+/** Mutual Pulse: each side sent a Pulse on at least one of the other's activities. */
+export function isMutual(iSent: boolean, theySent: boolean): boolean {
+  return iSent && theySent
 }
 
 export function sharedSports(a: Athlete, b: Athlete): Sport[] {

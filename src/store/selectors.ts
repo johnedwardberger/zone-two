@@ -16,14 +16,14 @@ type S = Pick<
   | 'activities'
   | 'filters'
   | 'swipes'
-  | 'kudosGiven'
-  | 'kudosReceived'
+  | 'pulsesSent'
+  | 'pulsesReceived'
   | 'requests'
   | 'matches'
   | 'messages'
   | 'hidden'
   | 'blocked'
-  | 'feedKudos'
+  | 'feedPulses'
 >
 
 export function athleteById(s: Pick<S, 'me' | 'athletes'>, id: string): Athlete | undefined {
@@ -37,8 +37,8 @@ export const isMatched = (s: Pick<S, 'matches'>, id: string) =>
 export const isUnavailable = (s: Pick<S, 'hidden' | 'blocked'>, id: string) =>
   s.hidden.includes(id) || s.blocked.includes(id)
 
-export const isMutualWith = (s: Pick<S, 'kudosGiven' | 'kudosReceived'>, id: string) =>
-  !!s.kudosGiven[id]?.length && !!s.kudosReceived[id]
+export const isMutualWith = (s: Pick<S, 'pulsesSent' | 'pulsesReceived'>, id: string) =>
+  !!s.pulsesSent[id]?.length && !!s.pulsesReceived[id]
 
 export const pendingIncoming = (s: Pick<S, 'requests'>, id: string) =>
   s.requests.find((r) => r.fromId === id && r.toId === 'me' && r.status === 'pending')
@@ -75,7 +75,7 @@ export function selectIncomingRequests(s: S) {
   )
 }
 
-/** Mutual-Kudos athletes I'm not matched with yet. */
+/** Mutual-Pulse athletes I'm not matched with yet. */
 export function selectMutuals(s: S): Athlete[] {
   return s.athletes.filter(
     (a) =>

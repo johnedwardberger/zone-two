@@ -11,7 +11,7 @@ export function ProBanner({ className = '' }: { className?: string }) {
       <Crown className="size-5 shrink-0 text-primary-strong" aria-hidden />
       <span className="flex-1">
         <span className="font-semibold">Zone Two Pro</span>
-        <span className="text-muted"> · See who gave you Kudos</span>
+        <span className="text-muted"> · See who sent you a Pulse</span>
       </span>
       <ChevronRight className="size-4 text-muted" aria-hidden />
     </Link>

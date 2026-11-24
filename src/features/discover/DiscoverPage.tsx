@@ -4,7 +4,7 @@ import { RotateCcw, SlidersHorizontal, X } from 'lucide-react'
 import { useAppStore } from '../../store/store'
 import { selectDeck } from '../../store/selectors'
 import { useDerived } from '../../store/hooks'
-import { KudosIcon } from '../../components/icons'
+import { PulseIcon } from '../../components/icons'
 import { Button, ButtonLink, FictionalNote } from '../../components/ui'
 import { Photo } from '../../components/Photo'
 import { ProBanner } from '../pro/ProBanner'
@@ -25,16 +25,16 @@ export function DiscoverPage() {
 
   function handleSwipe(dir: SwipeDir) {
     if (!top) return
-    const action = dir === 'right' ? 'kudos' : 'pass'
+    const action = dir === 'right' ? 'pulse' : 'pass'
     swipe(top.athlete.id, action)
     setAnnounce(
-      action === 'kudos'
-        ? `Kudos sent to ${top.athlete.firstName}.`
+      action === 'pulse'
+        ? `Pulse sent to ${top.athlete.firstName}.`
         : `Passed on ${top.athlete.firstName}.`,
     )
   }
 
-  // Keyboard: ← pass, → Kudos (ignored while typing or when a dialog is open).
+  // Keyboard: ← pass, → Pulse (ignored while typing or when a dialog is open).
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.defaultPrevented || e.altKey || e.metaKey || e.ctrlKey) return
@@ -87,7 +87,7 @@ export function DiscoverPage() {
           >
             <p id="deck-help" className="sr-only">
               Showing {top.athlete.firstName}’s latest activity. Press the left arrow to pass, the
-              right arrow to give Kudos, or open their profile.
+              right arrow to send a Pulse, or open their profile.
             </p>
             {deck
               .slice(0, 3)
@@ -137,10 +137,10 @@ export function DiscoverPage() {
               type="button"
               onClick={() => topRef.current?.fling('right')}
               className="flex size-20 items-center justify-center rounded-full bg-celebrate-deep text-white shadow-lift transition-transform hover:scale-105 active:scale-95"
-              aria-label={`Give Kudos to ${top.athlete.firstName}’s ${top.activity.title}`}
-              title="Kudos (→)"
+              aria-label={`Send a Pulse on ${top.athlete.firstName}’s ${top.activity.title}`}
+              title="Send a Pulse (→)"
             >
-              <KudosIcon filled className="size-10" strokeWidth={1.6} />
+              <PulseIcon filled className="size-10" />
             </button>
             <Link
               to={`/athlete/${top.athlete.id}`}
@@ -151,13 +151,13 @@ export function DiscoverPage() {
             </Link>
           </div>
           <p className="mt-3 hidden text-center text-xs text-muted desk:block">
-            Tip: use ← to pass and → to give Kudos.
+            Tip: use ← to pass and → to send a Pulse.
           </p>
         </>
       ) : (
         <section className="flex flex-col items-center rounded-card bg-surface px-6 py-12 text-center shadow-card">
           <span className="flex size-16 items-center justify-center rounded-full bg-primary-soft text-primary-strong">
-            <KudosIcon className="size-8" />
+            <PulseIcon className="size-8" />
           </span>
           <h2 className="mt-4 font-display text-3xl font-bold uppercase">You’re all caught up</h2>
           <p className="mt-2 max-w-xs text-muted">

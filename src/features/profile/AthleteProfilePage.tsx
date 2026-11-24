@@ -13,7 +13,7 @@ import {
   pendingOutgoing,
 } from '../../store/selectors'
 import { Button, ButtonLink, Card, FictionalNote, Page } from '../../components/ui'
-import { KudosIcon } from '../../components/icons'
+import { PulseIcon } from '../../components/icons'
 import { RequestMatchDialog } from '../matches/RequestMatchDialog'
 import { SafetyMenu } from '../matches/SafetyMenu'
 import { ActivityItem, ProfileHeader, TrainingSnapshot } from './ProfileView'
@@ -22,7 +22,7 @@ export function AthleteProfilePage() {
   const { id = '' } = useParams()
   const navigate = useNavigate()
   const core = useDerived((s) => s)
-  const giveKudos = useAppStore((s) => s.giveKudos)
+  const sendPulse = useAppStore((s) => s.sendPulse)
   const respond = useAppStore((s) => s.respondToRequest)
   const [requestOpen, setRequestOpen] = useState(false)
 
@@ -46,7 +46,7 @@ export function AthleteProfilePage() {
   const mutual = isMutualWith(core, id)
   const incoming = pendingIncoming(core, id)
   const outgoing = pendingOutgoing(core, id)
-  const given = new Set(core.kudosGiven[id] ?? [])
+  const given = new Set(core.pulsesSent[id] ?? [])
 
   let actions
   if (matched) {
@@ -88,7 +88,7 @@ export function AthleteProfilePage() {
           <Send className="size-5" aria-hidden /> Request to match
         </Button>
         <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1.5 text-sm font-semibold text-primary-pressed">
-          <KudosIcon filled className="size-4" /> Mutual Kudos
+          <PulseIcon filled className="size-4" /> Mutual Pulse
         </span>
       </div>
     )
@@ -96,8 +96,8 @@ export function AthleteProfilePage() {
     actions = (
       <p className="rounded-2xl bg-surface p-4 text-sm text-muted shadow-card">
         {given.size > 0
-          ? `You gave ${athlete.firstName} Kudos. Kudos stay private unless they’re mutual.`
-          : `Give Kudos to one of ${athlete.firstName}’s activities. If it’s mutual, you can request a match.`}
+          ? `You sent ${athlete.firstName} a Pulse. Pulses stay private unless they’re mutual.`
+          : `Send a Pulse on one of ${athlete.firstName}’s activities. If it’s mutual, you can request a match.`}
       </p>
     )
   }
@@ -132,10 +132,10 @@ export function AthleteProfilePage() {
                 <ActivityItem
                   activity={a}
                   units={core.units}
-                  kudos={
+                  pulse={
                     matched
                       ? undefined
-                      : { given: given.has(a.id), onGive: () => giveKudos(id, a.id) }
+                      : { sent: given.has(a.id), onSend: () => sendPulse(id, a.id) }
                   }
                 />
               </li>
