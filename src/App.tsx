@@ -16,6 +16,7 @@ import { EditProfilePage } from './features/profile/EditProfilePage'
 import { Celebration } from './features/matches/Celebration'
 import { ChatPage } from './features/chat/ChatPage'
 import { PlanDatePage } from './features/plan/PlanDatePage'
+import { ProPage } from './features/pro/ProPage'
 
 /** App pages need a demo profile; otherwise start at the landing page. */
 function RequireProfile() {
@@ -45,6 +46,7 @@ export function App() {
             <Route path="profile" element={<ProfilePage />} />
             <Route path="profile/edit" element={<EditProfilePage />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="pro" element={<ProPage />} />
             <Route path="athlete/:id" element={<AthleteProfilePage />} />
           </Route>
         </Route>
